@@ -1,0 +1,106 @@
+---
+title: 'test'
+permalink: '/test/'
+eleventyExcludeFromCollections: true
+---
+
+<p>testing</p>
+
+
+<p>there should be <a href="https://bing.com/">noopener</a> here</p>
+
+<p>there should be <a href="https://bing.com/" rel="noopener">noopener</a> here</p>
+
+<p>there should be <a href="https://bing.com/" rel="noreferrer">noreferrer</a> here</p>
+
+<p>there should be <a href="https://bing.com/" rel="nofollow">nofollow noopener</a> here</p>
+
+<p>there should be <a href="https://bing.com/" rel="">noopener</a> here</p>
+
+<p>there should be <a href="https://bing.com/" rel=" "> noopener</a> here</p>
+
+<p>there should be <a href="https://bing.com/" rel="foo
+bar
+">foo\r\nbar\r\nnoopener</a> here</p>
+
+
+<p>there should not be <a href="/foo">noopener</a> here</p>
+
+<p>there should be <a href="/foo" rel="noopener">noopener</a> here</p>
+
+<p>there should be <a href="/foo" rel="noreferrer">noreferrer</a> here</p>
+
+<p>there should be <a href="/foo" rel="nofollow">nofollow</a> here</p>
+
+<p>there should not be <a href="/foo" rel="">noopener</a> here</p>
+
+<p>there should not be <a href="/foo" rel=" "> noopener</a> here</p>
+
+<p>there should be <a href="/foo" rel="foo
+bar
+">foo\r\nbar\r\n</a> here</p>
+
+
+<p>there should not be <a href="https://jkc.codes/">noopener</a> here</p>
+
+<p>there should be <a href="https://jkc.codes/" rel="noopener">noopener</a> here</p>
+
+<p>there should be <a href="https://jkc.codes/" rel="noreferrer">noreferrer</a> here</p>
+
+<p>there should be <a href="https://jkc.codes/" rel="nofollow">nofollow</a> here</p>
+
+<p>there should not be <a href="https://jkc.codes/" rel="">noopener</a> here</p>
+
+<p>there should not be <a href="https://jkc.codes/" rel=" "> noopener</a> here</p>
+
+<p>there should be <a href="https://jkc.codes/" rel="foo
+bar
+">foo\r\nbar\r\n</a> here</p>
+
+
+<p>mail <a href="mailto:foo@bar.com">link</a></p>
+<p>mail <a href="mailto:john@jkc.codes">link</a></p>
+
+
+<form action="http://google.com/" method="post">
+	<label>Enter your name: </label>
+	<input type="text" required>
+
+	<button>Subscribe</button>
+</form>
+
+<form action="http://jkc.codes/" method="post">
+	<label>Enter your name: </label>
+	<input type="text" required>
+
+	<button>Subscribe</button>
+</form>
+
+<form action="/foo" method="post">
+	<label>Enter your name: </label>
+	<input type="text" required>
+
+	<button>Subscribe</button>
+</form>
+
+<form action="http://jkc.codes/" method="post">
+	<label>Enter your name: </label>
+	<input type="text" required>
+
+	<button formaction="http://bing.com/">Subscribe</button>
+</form>
+
+<form action="/foo" method="post">
+	<label>Enter your name: </label>
+	<input type="text" required>
+
+	<button formaction="http://yahoo.com/">Subscribe</button>
+</form>
+
+<form action="/foo" method="post" id="testform">
+	<label>Enter your name: </label>
+	<input type="text" required>
+
+	<button formaction="/bar">Subscribe</button>
+</form>
+<button form="testform" formaction="http://bbc.co.uk/">Subscribe</button>

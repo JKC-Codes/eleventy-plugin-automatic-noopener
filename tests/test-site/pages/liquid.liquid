@@ -1,0 +1,6 @@
+---
+title: 'Liquid'
+---
+{%- for test in tests -%}
+<a href="{{ test.href }}"{% if test.rel != '' %} rel="{{ test.rel }}"{% endif %}>test</a>
+{% endfor -%}

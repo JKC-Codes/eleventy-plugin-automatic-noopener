@@ -1,0 +1,120 @@
+---
+title: Tests
+eleventyExcludeFromCollections: true
+---
+
+<ul id="list">
+	{%- for page in collections.all %}
+		<li class="test">
+			<a href="{{ page.url }}" class="title">{{ page.data.title }}</a> &mdash; <span class="status">checking status&hellip;</span>
+			<div class="code">{{ page.templateContent }}</div>
+		</li>
+	{%- endfor %}
+</ul>
+
+
+<script>
+	const list = document.querySelector('#list');
+	const tests = Array.from(list.querySelectorAll('.test'));
+
+	// Sort list into alphabetical order
+	tests.sort((a, b) => {
+		const titleA = a.querySelector('.title').innerText;
+		const titleB = b.querySelector('.title').innerText;
+		return titleA > titleB;
+	});
+	list.innerHTML = '';
+	tests.forEach(test => {
+		list.appendChild(test);
+	});
+
+	// Display status
+	const control = document.createElement('div');
+	control.innerHTML = `<a href="https://bing.com/" rel="noopener">test</a>
+<a href="https://bing.com/" rel="noopener">test</a>
+<a href="https://bing.com/" rel="noreferrer">test</a>
+<a href="https://bing.com/" rel="nofollow noopener">test</a>
+<a href="https://bing.com/" rel=" noopener">test</a>
+<a href="https://bing.com/" rel=" test noopener">test</a>
+<a href="https://bing.com/" rel="foo
+bar
+	baz noopener">test</a>
+<a href="/root">test</a>
+<a href="/root" rel="noopener">test</a>
+<a href="/root" rel="noreferrer">test</a>
+<a href="/root" rel="nofollow">test</a>
+<a href="/root" rel=" ">test</a>
+<a href="/root" rel=" test">test</a>
+<a href="/root" rel="foo
+bar
+	baz">test</a>
+<a href="./relative">test</a>
+<a href="./relative" rel="noopener">test</a>
+<a href="./relative" rel="noreferrer">test</a>
+<a href="./relative" rel="nofollow">test</a>
+<a href="./relative" rel=" ">test</a>
+<a href="./relative" rel=" test">test</a>
+<a href="./relative" rel="foo
+bar
+	baz">test</a>
+<a href="https://google.com/">test</a>
+<a href="https://google.com/" rel="noopener">test</a>
+<a href="https://google.com/" rel="noreferrer">test</a>
+<a href="https://google.com/" rel="nofollow">test</a>
+<a href="https://google.com/" rel=" ">test</a>
+<a href="https://google.com/" rel=" test">test</a>
+<a href="https://google.com/" rel="foo
+bar
+	baz">test</a>
+<a href="mailto:someone@bing.com" rel="noopener">test</a>
+<a href="mailto:someone@google.com" rel="noopener">test</a>`;
+
+const markdown = document.createElement('div');
+markdown.innerHTML = `<p><a href="https://bing.com/" rel="noopener">test</a>
+<a href="https://bing.com/" rel="noopener">test</a>
+<a href="https://bing.com/" rel="noopener">test</a>
+<a href="https://bing.com/" rel="noopener">test</a>
+<a href="https://bing.com/" rel="noopener">test</a>
+<a href="https://bing.com/" rel="noopener">test</a>
+<a href="https://bing.com/" rel="noopener">test</a>
+<a href="/root">test</a>
+<a href="/root">test</a>
+<a href="/root">test</a>
+<a href="/root">test</a>
+<a href="/root">test</a>
+<a href="/root">test</a>
+<a href="/root">test</a>
+<a href="./relative">test</a>
+<a href="./relative">test</a>
+<a href="./relative">test</a>
+<a href="./relative">test</a>
+<a href="./relative">test</a>
+<a href="./relative">test</a>
+<a href="./relative">test</a>
+<a href="https://google.com/">test</a>
+<a href="https://google.com/">test</a>
+<a href="https://google.com/">test</a>
+<a href="https://google.com/">test</a>
+<a href="https://google.com/">test</a>
+<a href="https://google.com/">test</a>
+<a href="https://google.com/">test</a>
+<a href="mailto:someone@bing.com" rel="noopener">test</a>
+<a href="mailto:someone@google.com" rel="noopener">test</a></p>`;
+
+	tests.forEach(test => {
+		const matchesControl = test.querySelector('.code').innerHTML.trim() === control.innerHTML;
+		const isMarkdown = test.querySelector('.title').innerText === 'Markdown';
+		const matchesMarkdown = test.querySelector('.code').innerHTML.trim() === markdown.innerHTML;
+		const status = test.querySelector('.status');
+
+		if(matchesControl || (isMarkdown && matchesMarkdown)) {
+			status.textContent = 'Passing';
+			status.style.color = 'green';
+			test.removeChild(test.querySelector('.code'));
+		}
+		else {
+			status.textContent = 'Failing';
+			status.style.color = 'red';
+		}
+	});
+</script>
