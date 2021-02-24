@@ -76,10 +76,6 @@ function validateElements(elements) {
 			}
 		});
 
-		const parsedElements = Array.from(uniqueElements).map(element => {
-			return {tag: element};
-		});
-
-		return {elements: parsedElements};
+		return {elements: Array.from(uniqueElements)};
 	}
 }

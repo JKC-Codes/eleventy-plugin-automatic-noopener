@@ -91,20 +91,20 @@ test('Ignores ignore option casing', t => {
 
 
 test('Accepts valid array of elements options', t => {
-	t.deepEqual(parser({elements: ['a']}).elements, [{tag: 'a'}]);
-	t.deepEqual(parser({elements: ['area']}).elements, [{tag: 'area'}]);
-	t.deepEqual(parser({elements: ['form']}).elements, [{tag: 'form'}]);
+	t.deepEqual(parser({elements: ['a']}).elements, ['a']);
+	t.deepEqual(parser({elements: ['area']}).elements, ['area']);
+	t.deepEqual(parser({elements: ['form']}).elements, ['form']);
 
-	t.deepEqual(parser({elements: ['a', 'area']}).elements, [{tag: 'a'}, {tag: 'area'}]);
-	t.deepEqual(parser({elements: ['area', 'form']}).elements, [{tag: 'area'}, {tag: 'form'}]);
-	t.deepEqual(parser({elements: ['form', 'a']}).elements, [{tag: 'form'}, {tag: 'a'}]);
+	t.deepEqual(parser({elements: ['a', 'area']}).elements, ['a', 'area']);
+	t.deepEqual(parser({elements: ['area', 'form']}).elements, ['area', 'form']);
+	t.deepEqual(parser({elements: ['form', 'a']}).elements, ['form', 'a']);
 
-	t.deepEqual(parser({elements: ['a', 'area', 'form']}).elements, [{tag: 'a'}, {tag: 'area'}, {tag: 'form'}]);
+	t.deepEqual(parser({elements: ['a', 'area', 'form']}).elements, ['a', 'area', 'form']);
 	t.deepEqual(parser({elements: []}).elements, []);
 
-	t.deepEqual(parser({elements: ['AREA']}).elements, [{tag: 'area'}]);
-	t.deepEqual(parser({elements: ['aReA']}).elements, [{tag: 'area'}]);
-	t.deepEqual(parser({elements: [' area	']}).elements, [{tag: 'area'}]);
+	t.deepEqual(parser({elements: ['AREA']}).elements, ['area']);
+	t.deepEqual(parser({elements: ['aReA']}).elements, ['area']);
+	t.deepEqual(parser({elements: [' area	']}).elements, ['area']);
 });
 
 

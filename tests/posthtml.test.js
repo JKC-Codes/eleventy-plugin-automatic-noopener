@@ -49,33 +49,33 @@ test('Can use options parser separately', t => {
 	t.deepEqual(parser(), {
 		...defaultOptions,
 		parsed: true,
-		elements: [{tag: 'a'}, {tag: 'area'}, {tag: 'form'}]
+		elements: ['a', 'area', 'form']
 	});
 
 	t.deepEqual(parser({noopener: false}), {
 		...defaultOptions,
 		parsed: true,
-		elements: [{tag: 'a'}, {tag: 'area'}, {tag: 'form'}],
+		elements: ['a', 'area', 'form'],
 		noopener: false
 	});
 
 	t.deepEqual(parser({noreferrer: true}), {
 		...defaultOptions,
 		parsed: true,
-		elements: [{tag: 'a'}, {tag: 'area'}, {tag: 'form'}],
+		elements: ['a', 'area', 'form'],
 		noreferrer: true
 	});
 
 	t.deepEqual(parser({ignore: /foo/}), {
 		...defaultOptions,
 		parsed: true,
-		elements: [{tag: 'a'}, {tag: 'area'}, {tag: 'form'}],
+		elements: ['a', 'area', 'form'],
 		ignore: /foo/
 	});
 
 	t.deepEqual(parser({elements: ['a']}), {
 		...defaultOptions,
 		parsed: true,
-		elements: [{tag: 'a'}]
+		elements: ['a']
 	});
 });
