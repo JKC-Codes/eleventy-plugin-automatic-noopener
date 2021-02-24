@@ -24,6 +24,10 @@ test('Adds noopener to anchor links', t => {
 		'<a href="http://google.com/" rel="noopener"></a>');
 
 	t.is(addAttributes(
+		'<A hReF="http://google.com/"></A>', {noopener: true}),
+		'<A hReF="http://google.com/" rel="noopener"></A>');
+
+	t.is(addAttributes(
 		'<a href="https://google.com/"></a>', {noopener: true}),
 		'<a href="https://google.com/" rel="noopener"></a>');
 
@@ -88,11 +92,15 @@ test('Adds noopener to area links', t => {
 		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/"></map>', {noopener: true}),
 		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" rel="noopener"></map>');
 
-		t.is(addAttributes(
+	// t.is(addAttributes(
+	// 	'<map><aReA shape="rect" coords="0,0,0,0" hReF="http://google.com/"></map>', {noopener: true}),
+	// 	'<map><aReA shape="rect" coords="0,0,0,0" hReF="http://google.com/" rel="noopener"></map>');
+
+	t.is(addAttributes(
 		'<map><area shape="rect" coords="0,0,0,0" href="https://google.com/"></map>', {noopener: true}),
 		'<map><area shape="rect" coords="0,0,0,0" href="https://google.com/" rel="noopener"></map>');
 
-		t.is(addAttributes(
+	t.is(addAttributes(
 		'<map><area shape="rect" coords="0,0,0,0" href="https://google.com/" rel="nofollow"></map>', {noopener: true}),
 		'<map><area shape="rect" coords="0,0,0,0" href="https://google.com/" rel="nofollow noopener"></map>');
 });
@@ -103,11 +111,11 @@ test('Adds noreferrer to area links', t => {
 		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/"></map>', {noreferrer: true}),
 		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" rel="noreferrer"></map>');
 
-		t.is(addAttributes(
+	t.is(addAttributes(
 		'<map><area shape="rect" coords="0,0,0,0" href="https://google.com/"></map>', {noreferrer: true}),
 		'<map><area shape="rect" coords="0,0,0,0" href="https://google.com/" rel="noreferrer"></map>');
 
-		t.is(addAttributes(
+	t.is(addAttributes(
 		'<map><area shape="rect" coords="0,0,0,0" href="https://google.com/" rel="nofollow"></map>', {noreferrer: true}),
 		'<map><area shape="rect" coords="0,0,0,0" href="https://google.com/" rel="nofollow noreferrer"></map>');
 });
@@ -138,32 +146,20 @@ test('Adds noopener to form links', t => {
 		'<form action="http://google.com/" rel="noopener"></form>');
 
 	t.is(addAttributes(
+		'<fOrM aCtIoN="http://google.com/"></fOrM>', {noopener: true}),
+		'<fOrM aCtIoN="http://google.com/" rel="noopener"></fOrM>');
+
+	t.is(addAttributes(
 		'<form action="https://google.com/"></form>', {noopener: true}),
 		'<form action="https://google.com/" rel="noopener"></form>');
 
 	t.is(addAttributes(
 		'<form action="https://google.com/" rel="nofollow"></form>', {noopener: true}),
 		'<form action="https://google.com/" rel="nofollow noopener"></form>');
-
-	t.is(addAttributes(
-	'<form action=""><button formaction="http://google.com/"></button></form>', {noopener: true}),
-	'<form action="" rel="noopener"><button formaction="http://google.com/"></button></form>');
-
-	t.is(addAttributes(
-	'<form action=""><input type="submit" formaction="http://google.com/"></form>', {noopener: true}),
-	'<form action="" rel="noopener"><input type="submit" formaction="http://google.com/"></form>');
-
-	t.is(addAttributes(
-	'<form action=""><input type="image" formaction="http://google.com/"></form>', {noopener: true}),
-	'<form action="" rel="noopener"><input type="image" formaction="http://google.com/"></form>');
-
-	t.is(addAttributes(
-		'<form action="" id="test"></form><button form="test" formaction="http://google.com/"></button>', {noopener: true}),
-		'<form action="" id="test" rel="noopener"></form><button form="test" formaction="http://google.com/"></button>');
 });
 
 
-test('Adds nofollow to form links', t => {
+test('Adds noreferrer to form links', t => {
 	t.is(addAttributes(
 		'<form action="http://google.com/"></form>', {noreferrer: true}),
 		'<form action="http://google.com/" rel="noreferrer"></form>');
@@ -175,22 +171,6 @@ test('Adds nofollow to form links', t => {
 	t.is(addAttributes(
 		'<form action="https://google.com/" rel="nofollow"></form>', {noreferrer: true}),
 		'<form action="https://google.com/" rel="nofollow noreferrer"></form>');
-
-	t.is(addAttributes(
-	'<form action=""><button formaction="http://google.com/"></button></form>', {noreferrer: true}),
-	'<form action="" rel="noreferrer"><button formaction="http://google.com/"></button></form>');
-
-	t.is(addAttributes(
-	'<form action=""><input type="submit" formaction="http://google.com/"></form>', {noreferrer: true}),
-	'<form action="" rel="noreferrer"><input type="submit" formaction="http://google.com/"></form>');
-
-	t.is(addAttributes(
-	'<form action=""><input type="image" formaction="http://google.com/"></form>', {noreferrer: true}),
-	'<form action="" rel="noreferrer"><input type="image" formaction="http://google.com/"></form>');
-
-	t.is(addAttributes(
-		'<form action="" id="test"></form><button form="test" formaction="http://google.com/"></button>', {noreferrer: true}),
-		'<form action="" id="test" rel="noreferrer"></form><button form="test" formaction="http://google.com/"></button>');
 });
 
 
@@ -200,64 +180,83 @@ test('Ignores relative form links', t => {
 		'<form action="/foo"></form>');
 
 	t.is(addAttributes(
-		'<form action=""><button formaction="/foo"></button></form>', {noopener: true, noreferrer: true}),
-		'<form action=""><button formaction="/foo"></button></form>');
-
-	t.is(addAttributes(
-		'<form action=""><input type="submit" formaction="/foo"></form>', {noopener: true, noreferrer: true}),
-		'<form action=""><input type="submit" formaction="/foo"></form>');
-
-	t.is(addAttributes(
-		'<form action=""><input type="image" formaction="/foo"></form>', {noopener: true, noreferrer: true}),
-		'<form action=""><input type="image" formaction="/foo"></form>');
-
-	t.is(addAttributes(
-		'<form action="" id="test"></form><button form="test" formaction="/foo"></button>', {noopener: true, noreferrer: true}),
-		'<form action="" id="test"></form><button form="test" formaction="/foo"></button>');
-
-	t.is(addAttributes(
 		'<form action="./foo"></form>', {noopener: true, noreferrer: true}),
 		'<form action="./foo"></form>');
-
-	t.is(addAttributes(
-	'<form action=""><button formaction="./foo"></button></form>', {noopener: true, noreferrer: true}),
-	'<form action=""><button formaction="./foo"></button></form>');
-
-	t.is(addAttributes(
-	'<form action=""><input type="submit" formaction="./foo"></form>', {noopener: true, noreferrer: true}),
-	'<form action=""><input type="submit" formaction="./foo"></form>');
-
-	t.is(addAttributes(
-	'<form action=""><input type="image" formaction="./foo"></form>', {noopener: true, noreferrer: true}),
-	'<form action=""><input type="image" formaction="./foo"></form>');
-
-	t.is(addAttributes(
-		'<form action="" id="test"></form><button form="test" formaction="./foo"></button>', {noopener: true, noreferrer: true}),
-		'<form action="" id="test"></form><button form="test" formaction="./foo"></button>');
 
 	t.is(addAttributes(
 		'<form action="foo"></form>', {noopener: true, noreferrer: true}),
 		'<form action="foo"></form>');
 
 	t.is(addAttributes(
-	'<form action=""><button formaction="foo"></button></form>', {noopener: true, noreferrer: true}),
-	'<form action=""><button formaction="foo"></button></form>');
-
-	t.is(addAttributes(
-	'<form action=""><input type="submit" formaction="foo"></form>', {noopener: true, noreferrer: true}),
-	'<form action=""><input type="submit" formaction="foo"></form>');
-
-	t.is(addAttributes(
-	'<form action=""><input type="image" formaction="foo"></form>', {noopener: true, noreferrer: true}),
-	'<form action=""><input type="image" formaction="foo"></form>');
-
-	t.is(addAttributes(
-		'<form action="" id="test"></form><button form="test" formaction="foo"></button>', {noopener: true, noreferrer: true}),
-		'<form action="" id="test"></form><button form="test" formaction="foo"></button>');
-
-	t.is(addAttributes(
 		'<form action="" rel=" foo "></form>', {noopener: true, noreferrer: true}),
 		'<form action="" rel=" foo "></form>');
+});
+
+
+test('Formaction overrides action', t => {
+	t.is(addAttributes(
+		'<form action="/foo"><button formaction="http://google.com/"></button></form>', {noopener: true}),
+		'<form action="/foo" rel="noopener"><button formaction="http://google.com/"></button></form>');
+
+	t.is(addAttributes(
+	'<form action="/foo"><input type="submit" formaction="http://google.com/"></form>', {noopener: true}),
+	'<form action="/foo" rel="noopener"><input type="submit" formaction="http://google.com/"></form>');
+
+	t.is(addAttributes(
+	'<form action="/foo"><input type="image" formaction="http://google.com/"></form>', {noopener: true}),
+	'<form action="/foo" rel="noopener"><input type="image" formaction="http://google.com/"></form>');
+
+	t.is(addAttributes(
+		'<form action="/foo" id="test"></form><button form="test" formaction="http://google.com/"></button>', {noopener: true}),
+		'<form action="/foo" id="test" rel="noopener"></form><button form="test" formaction="http://google.com/"></button>');
+
+	t.is(addAttributes(
+		'<form action="/foo"><button formaction="http://google.com/"></button></form>', {noreferrer: true}),
+		'<form action="/foo" rel="noreferrer"><button formaction="http://google.com/"></button></form>');
+
+	t.is(addAttributes(
+	'<form action="/foo"><input type="submit" formaction="http://google.com/"></form>', {noreferrer: true}),
+	'<form action="/foo" rel="noreferrer"><input type="submit" formaction="http://google.com/"></form>');
+
+	t.is(addAttributes(
+	'<form action="/foo"><input type="image" formaction="http://google.com/"></form>', {noreferrer: true}),
+	'<form action="/foo" rel="noreferrer"><input type="image" formaction="http://google.com/"></form>');
+
+	t.is(addAttributes(
+		'<form action="/foo" id="test"></form><button form="test" formaction="http://google.com/"></button>', {noreferrer: true}),
+		'<form action="/foo" id="test" rel="noreferrer"></form><button form="test" formaction="http://google.com/"></button>');
+
+	t.is(addAttributes(
+		'<form action="http://google.com/"><button formaction="/foo"></button></form>', {noopener: true}),
+		'<form action="http://google.com/" rel="noopener"><button formaction="/foo"></button></form>');
+
+	t.is(addAttributes(
+	'<form action="http://google.com/"><input type="submit" formaction="/foo"></form>', {noopener: true}),
+	'<form action="http://google.com/" rel="noopener"><input type="submit" formaction="/foo"></form>');
+
+	t.is(addAttributes(
+	'<form action="http://google.com/"><input type="image" formaction="/foo"></form>', {noopener: true}),
+	'<form action="http://google.com/" rel="noopener"><input type="image" formaction="/foo"></form>');
+
+	t.is(addAttributes(
+		'<form action="http://google.com/" id="test"></form><button form="test" formaction="/foo"></button>', {noopener: true}),
+		'<form action="http://google.com/" id="test" rel="noopener"></form><button form="test" formaction="/foo"></button>');
+
+	t.is(addAttributes(
+		'<form action="http://google.com/"><button formaction="/foo"></button></form>', {noreferrer: true}),
+		'<form action="http://google.com/" rel="noreferrer"><button formaction="/foo"></button></form>');
+
+	t.is(addAttributes(
+	'<form action="http://google.com/"><input type="submit" formaction="/foo"></form>', {noreferrer: true}),
+	'<form action="http://google.com/" rel="noreferrer"><input type="submit" formaction="/foo"></form>');
+
+	t.is(addAttributes(
+	'<form action="http://google.com/"><input type="image" formaction="/foo"></form>', {noreferrer: true}),
+	'<form action="http://google.com/" rel="noreferrer"><input type="image" formaction="/foo"></form>');
+
+	t.is(addAttributes(
+		'<form action="http://google.com/" id="test"></form><button form="test" formaction="/foo"></button>', {noreferrer: true}),
+		'<form action="http://google.com/" id="test" rel="noreferrer"></form><button form="test" formaction="/foo"></button>');
 });
 
 
