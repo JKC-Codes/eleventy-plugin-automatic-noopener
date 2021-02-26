@@ -1,134 +1,159 @@
 module.exports = [
 	{
 		href: 'https://bing.com/',
-		rel: ''
+		rel: '',
+		target: '_blank'
 	},
 	{
 		href: 'https://bing.com/',
-		rel: 'noopener'
+		rel: 'noopener',
+		target: '_blank'
 	},
 	{
 		href: 'https://bing.com/',
-		rel: 'noreferrer'
+		rel: 'noreferrer',
+		target: '_blank'
 	},
 	{
 		href: 'https://bing.com/',
-		rel: 'nofollow'
+		rel: 'nofollow',
+		target: '_blank'
 	},
 	{
 		href: 'https://bing.com/',
-		rel: ' '
+		rel: ' ',
+		target: '_blank'
 	},
 	{
 		href: 'https://bing.com/',
-		rel: ' test'
+		rel: ' test',
+		target: '_blank'
 	},
 	{
 		href: 'https://bing.com/',
 		rel:
 `foo
 bar
-	baz`
+	baz`,
+	target: '_blank'
+	},
+	{
+		href: 'https://bing.com/',
+		rel: '',
+		target: 'name'
 	},
 	{
 		href: '/root',
-		rel: ''
+		rel: '',
+		target: '_blank'
 	},
 	{
 		href: '/root',
-		rel: 'noopener'
+		rel: 'noopener',
+		target: '_blank'
 	},
 	{
 		href: '/root',
-		rel: 'noreferrer'
+		rel: 'noreferrer',
+		target: '_blank'
 	},
 	{
 		href: '/root',
-		rel: 'nofollow'
+		rel: 'nofollow',
+		target: '_blank'
 	},
 	{
 		href: '/root',
-		rel: ' '
+		rel: ' ',
+		target: '_blank'
 	},
 	{
 		href: '/root',
-		rel: ' test'
+		rel: ' test',
+		target: '_blank'
 	},
 	{
 		href: '/root',
 		rel:
 `foo
 bar
-	baz`
+	baz`,
+	target: '_blank'
 	},
 	{
 		href: './relative',
-		rel: ''
+		rel: '',
+		target: '_blank'
 	},
 	{
 		href: './relative',
-		rel: 'noopener'
+		rel: 'noopener',
+		target: '_blank'
 	},
 	{
 		href: './relative',
-		rel: 'noreferrer'
+		rel: 'noreferrer',
+		target: '_blank'
 	},
 	{
 		href: './relative',
-		rel: 'nofollow'
+		rel: 'nofollow',
+		target: '_blank'
 	},
 	{
 		href: './relative',
-		rel: ' '
+		rel: ' ',
+		target: '_blank'
 	},
 	{
 		href: './relative',
-		rel: ' test'
+		rel: ' test',
+		target: '_blank'
 	},
 	{
 		href: './relative',
 		rel:
 `foo
 bar
-	baz`
+	baz`,
+	target: '_blank'
 	},
 	{
 		href: 'https://google.com/',
-		rel: ''
+		rel: '',
+		target: '_blank'
 	},
 	{
 		href: 'https://google.com/',
-		rel: 'noopener'
+		rel: 'noopener',
+		target: '_blank'
 	},
 	{
 		href: 'https://google.com/',
-		rel: 'noreferrer'
+		rel: 'noreferrer',
+		target: '_blank'
 	},
 	{
 		href: 'https://google.com/',
-		rel: 'nofollow'
+		rel: 'nofollow',
+		target: '_blank'
 	},
 	{
 		href: 'https://google.com/',
-		rel: ' '
+		rel: ' ',
+		target: '_blank'
 	},
 	{
 		href: 'https://google.com/',
-		rel: ' test'
+		rel: ' test',
+		target: '_blank'
 	},
 	{
 		href: 'https://google.com/',
 		rel:
 `foo
 bar
-	baz`
-	},
-	{
-		href: 'mailto:someone@bing.com',
-		rel: ''
-	},
-	{
-		href: 'mailto:someone@google.com',
-		rel: ''
-	},
+	baz`,
+	target: '_blank'
+	}
 ]

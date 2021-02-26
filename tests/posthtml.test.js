@@ -18,29 +18,29 @@ function addAttributes(HTMLString, options) {
 
 
 test('Can be used directly with PostHTML', async t => {
-	return addAttributes('<a href="https://bing.com/">test</a>')
+	return addAttributes('<a href="https://bing.com/" target="_blank">test</a>')
 	.then(result => {
-		t.is(result, '<a href="https://bing.com/" rel="noopener">test</a>');
+		t.is(result, '<a href="https://bing.com/" target="_blank" rel="noopener">test</a>');
 	});
 });
 
 
 test('Can be used with custom options by PostHTML', async t => {
-	return addAttributes('<a href="https://bing.com/">test</a>', {elements: []})
+	return addAttributes('<a href="https://bing.com/" target="_blank">test</a>', {noreferrer: true})
 	.then(result => {
-		t.is(result, '<a href="https://bing.com/">test</a>');
+		t.is(result, '<a href="https://bing.com/" target="_blank" rel="noreferrer">test</a>');
 	});
 });
 
 
 test('Can combine PostHTML and options parser', async t => {
-	return addAttributes('<a href="https://bing.com/">test</a>', {
+	return addAttributes('<a href="https://bing.com/" target="_blank">test</a>', {
 		...defaultOptions,
 		parsed: true,
-		noopener: false
+		noreferrer: true
 	})
 	.then(result => {
-		t.is(result, '<a href="https://bing.com/">test</a>');
+		t.is(result, '<a href="https://bing.com/" target="_blank" rel="noreferrer">test</a>');
 	});
 });
 

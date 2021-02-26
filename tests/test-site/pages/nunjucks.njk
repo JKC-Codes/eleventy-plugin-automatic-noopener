@@ -2,5 +2,5 @@
 title: 'Nunjucks'
 ---
 {%- for test in tests -%}
-<a href="{{ test.href }}"{% if test.rel %} rel="{{ test.rel }}"{% endif %}>test</a>
+<a href="{{ test.href }}"{% if test.target %} target="{{ test.target }}"{% endif %}{% if test.rel %} rel="{{ test.rel }}"{% endif %}>test</a>
 {% endfor -%}

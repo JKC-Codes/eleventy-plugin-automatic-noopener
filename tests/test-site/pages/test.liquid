@@ -7,114 +7,123 @@ eleventyExcludeFromCollections: true
 <p>testing</p>
 
 
-<p>there should be <a href="https://bing.com/">noopener</a> here</p>
+<p>there should NOT be <a href="https://bing.com/">noopener</a> here</p>
 
 <p>there should be <a href="https://bing.com/" rel="noopener">noopener</a> here</p>
 
 <p>there should be <a href="https://bing.com/" rel="noreferrer">noreferrer</a> here</p>
 
-<p>there should be <a href="https://bing.com/" rel="nofollow">nofollow noopener</a> here</p>
+<p>there should be <a href="https://bing.com/" rel="nofollow">nofollow</a> here</p>
 
-<p>there should be <a href="https://bing.com/" rel="">noopener</a> here</p>
-
-<p>there should be <a href="https://bing.com/" rel=" ">noopener</a> here</p>
-
-<p>there should be <a href="https://bing.com/" rel="foo
-bar
-">foo\r\nbar\r\nnoopener</a> here</p>
+<p>there should NOT be <a href="https://bing.com/" rel="">noopener</a> here</p>
 
 
-<p>there should not be <a href="/foo">noopener</a> here</p>
+<p>there should be <a href="https://bing.com/" target="_blank">noopener</a> here</p>
 
-<p>there should be <a href="/foo" rel="noopener">noopener</a> here</p>
+<p>there should be <a href="https://bing.com/" target="foo">noopener</a> here</p>
 
-<p>there should be <a href="/foo" rel="noreferrer">noreferrer</a> here</p>
+<p>there should be <a href="https://bing.com/" target=" ">noopener</a> here</p>
 
-<p>there should be <a href="/foo" rel="nofollow">nofollow</a> here</p>
+<p>there should NOT be <a href="https://bing.com/" target="_parent">noopener</a> here</p>
 
-<p>there should not be <a href="/foo" rel="">noopener</a> here</p>
+<p>there should NOT be <a href="https://bing.com/" target="_self">noopener</a> here</p>
 
-<p>there should not be <a href="/foo" rel=" ">noopener</a> here</p>
+<p>there should NOT be <a href="https://bing.com/" target="_top">noopener</a> here</p>
 
-<p>there should be <a href="/foo" rel="foo
-bar
-">foo\r\nbar\r\n</a> here</p>
+<p>there should NOT be <a href="https://bing.com/" target="">noopener</a> here</p>
 
 
-<p>there should not be <a href="https://google.com/">noopener</a> here</p>
+<p>there should be <a href="https://bing.com/" rel="noopener" target="_blank">noopener</a> here</p>
 
-<p>there should be <a href="https://google.com/" rel="noopener">noopener</a> here</p>
+<p>there should be <a href="https://bing.com/" rel="noopener" target="_self">noopener</a> here</p>
 
-<p>there should be <a href="https://google.com/" rel="noreferrer">noreferrer</a> here</p>
+<p>there should be <a href="https://bing.com/" rel="noreferrer" target="_blank">noreferrer</a> here</p>
 
-<p>there should be <a href="https://google.com/" rel="nofollow">nofollow</a> here</p>
+<p>there should be <a href="https://bing.com/" rel="noreferrer" target="_self">noreferrer</a> here</p>
 
-<p>there should not be <a href="https://google.com/" rel="">noopener</a> here</p>
+<p>there should be <a href="https://bing.com/" rel="nofollow" target="_blank">nofollow noopener</a> here</p>
 
-<p>there should not be <a href="https://google.com/" rel=" ">noopener</a> here</p>
+<p>there should be <a href="https://bing.com/" rel="nofollow" target="_self">nofollow</a> here</p>
 
-<p>there should be <a href="https://google.com/" rel="foo
-bar
-">foo\r\nbar\r\n</a> here</p>
+<p>there should be <a href="https://bing.com/" rel="" target="_blank">noopener</a> here</p>
+
+<p>there should NOT be <a href="https://bing.com/" rel="" target="_self">noopener</a> here</p>
+
+
+<p>there should NOT be <a href="/foo" target="_blank">noopener</a> here</p>
+
+<p>there should NOT be <a href="https://google.com/" target="_blank">noopener</a> here</p>
+
+
+<p>there should NOT be <a href="https://bing.com/" target="_blank" rel="opener">noopener</a> here</p>
+
+<p>there should NOT be <a>noopener</a> here</p>
 
 
 <p>mail <a href="mailto:foo@bar.com">link</a></p>
 <p>mail <a href="mailto:john@jkc.codes">link</a></p>
 
 
+<form action="http://google.com/" target="_blank" method="post">
+	<label>Should NOT have noopener: </label>
+	<input type="text" required>
+
+	<button>Subscribe</button>
+</form>
+
+
 <form action="http://bing.com/" method="post">
+	<label>Should NOT have noopener: </label>
+	<input type="text" required>
+
+	<button>Subscribe</button>
+</form>
+
+
+<form action="http://bing.com/" target="_blank" method="post">
 	<label>Should have noopener: </label>
 	<input type="text" required>
 
 	<button>Subscribe</button>
 </form>
 
-<form action="http://google.com/" method="post">
-	<label>Should not have noopener: </label>
-	<input type="text" required>
 
-	<button>Subscribe</button>
-</form>
-
-<form action="/foo" method="post">
-	<label>Should not have noopener: </label>
-	<input type="text" required>
-
-	<button>Subscribe</button>
-</form>
-
-<form action="http://google.com/" method="post">
+<form action="http://google.com/" target="_blank" method="post">
 	<label>Should have noopener: </label>
 	<input type="text" required>
 
 	<button formaction="http://bing.com/">Subscribe</button>
 </form>
 
-<form action="/foo" method="post">
+
+<form action="http://bing.com/" target="_self" method="post">
 	<label>Should have noopener: </label>
 	<input type="text" required>
 
-	<button formaction="http://bing.com/">Subscribe</button>
+	<button formtarget="_blank">Subscribe</button>
 </form>
 
-<form action="/foo" method="post" id="testform">
-	<label>Should have noopener: </label>
+
+<form action="http://bing.com/" id="foobar" method="post">
+	<label>Should not fail because of empty button: </label>
 	<input type="text" required>
 
-	<button formaction="/bar">Subscribe</button>
+	<button>Subscribe</button>
 </form>
-<button form="testform" formaction="http://bing.com/">Subscribe</button>
+<button></button>
 
-<form action="/foo" method="post">
-	<label>Should have noopener: </label>
+
+<form action="http://bing.com/" id="foobar" rel=opener" method="post">
+	<label>Should not have Noopener: </label>
 	<input type="text" required>
 
-	<input type="submit" value="Subscribe" formaction="http://bing.com/">
+	<button>Subscribe</button>
 </form>
 
-<form action="/foo" method="post">
-	<label>Should have noopener: </label>
+
+<form>
+	<label>Should not fail because of missing attributes: </label>
 	<input type="text" required>
 
-	<input tYpE="sUbMiT" value="Subscribe" fOrMaCtIoN="http://bing.com/">
+	<button>Subscribe</button>
 </form>

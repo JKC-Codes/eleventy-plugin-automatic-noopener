@@ -7,9 +7,10 @@ class page {
 
 	render({tests}) {
 		return tests.reduce((acc, cur) => {
+			let target = cur.target ? ` target="${cur.target}"` : '';
 			let rel = cur.rel ? ` rel="${cur.rel}"` : '';
 
-			return `${acc}<a href="${cur.href}"${rel}>test</a>
+			return `${acc}<a href="${cur.href}"${target}${rel}>test</a>
 `;
 		}, '');
 	}
