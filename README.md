@@ -4,12 +4,12 @@ An [11ty](https://www.11ty.dev/) plugin that automatically adds a `rel="noopener
 
 - [Installation](#installation)
 - [Usage](#usage)
-	- [PostHTML](#posthtml)
+  - [PostHTML](#posthtml)
 - [Configuration](#configuration)
-	- [ignore](#ignore)
-	- [elements](#elements)
-	- [noopener](#noopener)
-	- [noreferrer](#noreferrer)
+  - [ignore](#ignore)
+  - [elements](#elements)
+  - [noopener](#noopener)
+  - [noreferrer](#noreferrer)
 - [Licence](#licence)
 
 
@@ -27,7 +27,7 @@ In your [Eleventy config file](https://www.11ty.dev/docs/config/) (`.eleventy.js
 const automaticNoopener = require('eleventy-plugin-automatic-noopener');
 
 module.exports = function(eleventyConfig) {
-	eleventyConfig.addPlugin(automaticNoopener);
+  eleventyConfig.addPlugin(automaticNoopener);
 }
 ```
 
@@ -46,16 +46,16 @@ const { posthtml: automaticNoopener, parser } = require('eleventy-plugin-automat
 const options = parser({noreferrer: true});
 
 module.exports = function(eleventyConfig) {
-	eleventyConfig.addTransform('posthtml', function(HTMLString, outputPath) {
-		if(outputPath && outputPath.endsWith('.html')) {
-			return posthtml([automaticNoopener(options), anotherPostHTMLPlugin()])
-				.process(HTMLString)
-				.then(result => result.html));
-		}
-		else {
-			return HTMLString;
-		}
-	});
+  eleventyConfig.addTransform('posthtml', function(HTMLString, outputPath) {
+    if(outputPath && outputPath.endsWith('.html')) {
+      return posthtml([automaticNoopener(options), anotherPostHTMLPlugin()])
+        .process(HTMLString)
+        .then(result => result.html));
+    }
+    else {
+      return HTMLString;
+    }
+  });
 }
 ```
 
@@ -65,12 +65,12 @@ module.exports = function(eleventyConfig) {
 const automaticNoopener = require('eleventy-plugin-automatic-noopener');
 
 module.exports = function(eleventyConfig) {
-	eleventyConfig.addPlugin(automaticNoopener, {
-		ignore: /^https?:\/\/google\.com(\/|$)/i,
-		elements: ['a', 'area', 'form']
-		noopener: true,
-		noreferrer: false,
-	});
+  eleventyConfig.addPlugin(automaticNoopener, {
+    ignore: /^https?:\/\/google\.com(\/|$)/i,
+    elements: ['a', 'area', 'form']
+    noopener: true,
+    noreferrer: false,
+  });
 }
 ```
 
