@@ -93,14 +93,14 @@ The elements to add `rel="noopener"` or `rel="noreferrer"` to. Strings must be '
 - Default: True
 - Accepts: Boolean
 
-Add a `rel="noopener"` attribute to all elements with external links that don't have a `rel="noreferrer"` attribute on them. Ignored if [noreferrer](#noreferrer) is true.
+Add a `rel="noopener"` attribute to all elements with unsafe external links that don't have a `rel="noreferrer"` or `rel="opener"` attribute on them. Ignored if [noreferrer](#noreferrer) is true.
 
 
 ### noreferrer
 - Default: False
 - Accepts: Boolean
 
-Add a `rel="noreferrer"` attribute to all elements with external links.
+Add a `rel="noreferrer"` attribute to all elements with unsafe external links that don't have a `rel="opener"` attribute on them.
 
 
 ## Licence
