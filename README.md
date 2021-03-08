@@ -67,7 +67,7 @@ const automaticNoopener = require('eleventy-plugin-automatic-noopener');
 module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(automaticNoopener, {
     ignore: /^https?:\/\/google\.com(\/|$)/i,
-    elements: ['a', 'area', 'form']
+    elements: ['a', 'area', 'form'],
     noopener: true,
     noreferrer: false,
   });
