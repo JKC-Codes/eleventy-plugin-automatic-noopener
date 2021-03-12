@@ -104,4 +104,4 @@ Add a `rel="noreferrer"` attribute to all elements with unsafe external links th
 
 
 ## Licence
-[GNU GPLv3 ](https://choosealicense.com/licenses/gpl-3.0/)
+[MPL-2.0](https://choosealicense.com/licenses/mpl-2.0/)
