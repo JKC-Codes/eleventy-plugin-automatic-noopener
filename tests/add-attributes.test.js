@@ -119,9 +119,9 @@ test('Adds noopener to area links', t => {
 		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_blank"></map>', {noopener: true}),
 		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_blank" rel="noopener"></map>');
 
-	// t.is(addAttributes(
-	// 	'<map><aReA shape="rect" coords="0,0,0,0" hReF="http://google.com/" target="_blank"></map>', {noopener: true}),
-	// 	'<map><aReA shape="rect" coords="0,0,0,0" hReF="http://google.com/" target="_blank" rel="noopener"></map>');
+	t.is(addAttributes(
+		'<map><aReA shape="rect" coords="0,0,0,0" hReF="http://google.com/" target="_blank"></map>', {noopener: true}),
+		'<map><aReA shape="rect" coords="0,0,0,0" hReF="http://google.com/" target="_blank" rel="noopener"></map>');
 
 	t.is(addAttributes(
 		'<map><area shape="rect" coords="0,0,0,0" href="https://google.com/" target="_blank"></map>', {noopener: true}),
