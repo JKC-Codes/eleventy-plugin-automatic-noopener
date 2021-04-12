@@ -33,11 +33,7 @@ module.exports = function(eleventyConfig) {
 
 
 ### PostHTML
-Automatic Noopener provides a [PostHTML](https://posthtml.org/) compatible version so you can reduce build times by reusing an existing PostHTML syntax tree.
-
-The `posthtml` export provides a stand-alone version of Automatic Noopener. This could even be used outside of Eleventy.
-
-The optional `parser` export provides an options parser to further reduce build times when using Eleventy's `--watch` or `--serve` options. Parsing your options outside of the transform will mean this is only done once at the start of watching or serving rather than every time Eleventy builds.
+If you're already using [PostHTML](https://posthtml.org/) you can reduce build times by using the `posthtml` export as a plugin to the existing PostHTML syntax tree. It provides a stand-alone PostHTML version of Automatic Noopener that could even be used outside of Eleventy. There is also an optional `parser` export that provides an options parser to further reduce build times when using Eleventy's `--watch` or `--serve` options. Parsing your options outside of the transform will mean this is only done once at the start of watching or serving rather than every time Eleventy builds.
 
 ```js
 const posthtml = require('posthtml');
@@ -100,7 +96,7 @@ Add a `rel="noopener"` attribute to all elements with unsafe external links that
 - Default: False
 - Accepts: Boolean
 
-Add a `rel="noreferrer"` attribute to all elements with unsafe external links that don't have a `rel="opener"` attribute on them.
+Add a `rel="noreferrer"` attribute to all elements with external links that don't have a `rel="opener"` attribute on them.
 
 
 ## Licence

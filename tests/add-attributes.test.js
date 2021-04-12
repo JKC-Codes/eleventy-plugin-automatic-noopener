@@ -68,28 +68,47 @@ test('Adds noreferrer to anchor links', t => {
 });
 
 
-test('Ignores relative anchor links', t => {
+test('Noopener ignores relative anchor links', t => {
 	t.is(addAttributes(
-		'<a href="/foo"></a>', {noopener: true, noreferrer: true}),
+		'<a href="/foo"></a>', {noopener: true}),
 		'<a href="/foo"></a>');
 
 	t.is(addAttributes(
-		'<a href="./foo"></a>', {noopener: true, noreferrer: true}),
+		'<a href="./foo"></a>', {noopener: true}),
 		'<a href="./foo"></a>');
 
 	t.is(addAttributes(
-		'<a href="foo"></a>', {noopener: true, noreferrer: true}),
+		'<a href="foo"></a>', {noopener: true}),
 		'<a href="foo"></a>');
 
 	t.is(addAttributes(
-		'<a href="" rel=" foo "></a>', {noopener: true, noreferrer: true}),
+		'<a href="" rel=" foo "></a>', {noopener: true}),
 		'<a href="" rel=" foo "></a>');
 });
 
 
-test('Ignores non-"_blank" anchor targets', t => {
+test('Noreferrer ignores relative anchor links', t => {
 	t.is(addAttributes(
-		'<a href="http://google.com/" target="_parent"></a>', {noreferrer: true}),
+		'<a href="/foo"></a>', {noreferrer: true}),
+		'<a href="/foo"></a>');
+
+	t.is(addAttributes(
+		'<a href="./foo"></a>', {noreferrer: true}),
+		'<a href="./foo"></a>');
+
+	t.is(addAttributes(
+		'<a href="foo"></a>', {noreferrer: true}),
+		'<a href="foo"></a>');
+
+	t.is(addAttributes(
+		'<a href="" rel=" foo "></a>', {noreferrer: true}),
+		'<a href="" rel=" foo "></a>');
+});
+
+
+test('Noopener ignores non-"_blank" anchor targets', t => {
+	t.is(addAttributes(
+		'<a href="http://google.com/" target="_parent"></a>', {noopener: true}),
 		'<a href="http://google.com/" target="_parent"></a>');
 
 	t.is(addAttributes(
@@ -97,7 +116,7 @@ test('Ignores non-"_blank" anchor targets', t => {
 		'<a href="http://google.com/" target="_self"></a>');
 
 	t.is(addAttributes(
-		'<a href="http://google.com/" target="_top"></a>', {noopener: true, noreferrer: true}),
+		'<a href="http://google.com/" target="_top"></a>', {noopener: true}),
 		'<a href="http://google.com/" target="_top"></a>');
 
 	t.is(addAttributes(
@@ -107,6 +126,33 @@ test('Ignores non-"_blank" anchor targets', t => {
 	t.is(addAttributes(
 		'<a href="http://google.com/" target="named"></a>', {noopener: true}),
 		'<a href="http://google.com/" target="named" rel="noopener"></a>');
+
+	t.is(addAttributes(
+		'<a href="http://google.com/" target=" "></a>', {noopener: true}),
+		'<a href="http://google.com/" target=" " rel="noopener"></a>');
+});
+
+
+test('Noreferrer includes non-"_blank" anchor targets', t => {
+	t.is(addAttributes(
+		'<a href="http://google.com/" target="_parent"></a>', {noreferrer: true}),
+		'<a href="http://google.com/" target="_parent" rel="noreferrer"></a>');
+
+	t.is(addAttributes(
+		'<a href="http://google.com/" target="_self"></a>', {noreferrer: true}),
+		'<a href="http://google.com/" target="_self" rel="noreferrer"></a>');
+
+	t.is(addAttributes(
+		'<a href="http://google.com/" target="_top"></a>', {noreferrer: true}),
+		'<a href="http://google.com/" target="_top" rel="noreferrer"></a>');
+
+	t.is(addAttributes(
+		'<a href="http://google.com/" target=""></a>', {noreferrer: true}),
+		'<a href="http://google.com/" target="" rel="noreferrer"></a>');
+
+	t.is(addAttributes(
+		'<a href="http://google.com/" target="named"></a>', {noreferrer: true}),
+		'<a href="http://google.com/" target="named" rel="noreferrer"></a>');
 
 	t.is(addAttributes(
 		'<a href="http://google.com/" target=" "></a>', {noreferrer: true}),
@@ -148,36 +194,55 @@ test('Adds noreferrer to area links', t => {
 });
 
 
-test('Ignores relative area links', t => {
+test('Noopener ignores relative area links', t => {
 	t.is(addAttributes(
-		'<map><area shape="rect" coords="0,0,0,0" href="/foo" target="_blank"></map>', {noopener: true, noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="/foo" target="_blank"></map>', {noopener: true}),
 		'<map><area shape="rect" coords="0,0,0,0" href="/foo" target="_blank"></map>');
 
 	t.is(addAttributes(
-		'<map><area shape="rect" coords="0,0,0,0" href="./foo" target="_blank"></map>', {noopener: true, noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="./foo" target="_blank"></map>', {noopener: true}),
 		'<map><area shape="rect" coords="0,0,0,0" href="./foo" target="_blank"></map>');
 
 	t.is(addAttributes(
-		'<map><area shape="rect" coords="0,0,0,0" href="foo" target="_blank"></map>', {noopener: true, noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="foo" target="_blank"></map>', {noopener: true}),
 		'<map><area shape="rect" coords="0,0,0,0" href="foo" target="_blank"></map>');
 
 	t.is(addAttributes(
-		'<map><area shape="rect" coords="0,0,0,0" href="" rel=" foo " target="_blank"></map>', {noopener: true, noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="" rel=" foo " target="_blank"></map>', {noopener: true}),
 		'<map><area shape="rect" coords="0,0,0,0" href="" rel=" foo " target="_blank"></map>');
 });
 
 
-test('Ignores non-"_blank" area links', t => {
+test('Noreferrer ignores relative area links', t => {
+	t.is(addAttributes(
+		'<map><area shape="rect" coords="0,0,0,0" href="/foo" target="_blank"></map>', {noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="/foo" target="_blank"></map>');
+
+	t.is(addAttributes(
+		'<map><area shape="rect" coords="0,0,0,0" href="./foo" target="_blank"></map>', {noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="./foo" target="_blank"></map>');
+
+	t.is(addAttributes(
+		'<map><area shape="rect" coords="0,0,0,0" href="foo" target="_blank"></map>', {noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="foo" target="_blank"></map>');
+
+	t.is(addAttributes(
+		'<map><area shape="rect" coords="0,0,0,0" href="" rel=" foo " target="_blank"></map>', {noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="" rel=" foo " target="_blank"></map>');
+});
+
+
+test('Noopener ignores non-"_blank" area links', t => {
 	t.is(addAttributes(
 		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_parent"></map>', {noopener: true}),
 		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_parent"></map>');
 
 	t.is(addAttributes(
-		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_self"></map>', {noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_self"></map>', {noopener: true}),
 		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_self"></map>');
 
 	t.is(addAttributes(
-		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_top"></map>', {noopener: true, noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_top"></map>', {noopener: true}),
 		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_top"></map>');
 
 	t.is(addAttributes(
@@ -185,12 +250,39 @@ test('Ignores non-"_blank" area links', t => {
 		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target=""></map>');
 
 	t.is(addAttributes(
-		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="named"></map>', {noreferrer: true}),
-		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="named" rel="noreferrer"></map>');
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="named"></map>', {noopener: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="named" rel="noopener"></map>');
 
 	t.is(addAttributes(
 		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target=" "></map>', {noopener: true}),
 		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target=" " rel="noopener"></map>');
+});
+
+
+test('Noreferrer includes non-"_blank" area links', t => {
+	t.is(addAttributes(
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_parent"></map>', {noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_parent" rel="noreferrer"></map>');
+
+	t.is(addAttributes(
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_self"></map>', {noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_self" rel="noreferrer"></map>');
+
+	t.is(addAttributes(
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_top"></map>', {noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_top" rel="noreferrer"></map>');
+
+	t.is(addAttributes(
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target=""></map>', {noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="" rel="noreferrer"></map>');
+
+	t.is(addAttributes(
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="named"></map>', {noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="named" rel="noreferrer"></map>');
+
+	t.is(addAttributes(
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target=" "></map>', {noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target=" " rel="noreferrer"></map>');
 });
 
 
@@ -228,36 +320,55 @@ test('Adds noreferrer to form links', t => {
 });
 
 
-test('Ignores relative form links', t => {
+test('Noopener ignores relative form links', t => {
 	t.is(addAttributes(
-		'<form action="/foo" target="_blank"></form>', {noopener: true, noreferrer: true}),
+		'<form action="/foo" target="_blank"></form>', {noopener: true}),
 		'<form action="/foo" target="_blank"></form>');
 
 	t.is(addAttributes(
-		'<form action="./foo" target="_blank"></form>', {noopener: true, noreferrer: true}),
+		'<form action="./foo" target="_blank"></form>', {noopener: true}),
 		'<form action="./foo" target="_blank"></form>');
 
 	t.is(addAttributes(
-		'<form action="foo" target="_blank"></form>', {noopener: true, noreferrer: true}),
+		'<form action="foo" target="_blank"></form>', {noopener: true}),
 		'<form action="foo" target="_blank"></form>');
 
 	t.is(addAttributes(
-		'<form action="" target="_blank" rel=" foo "></form>', {noopener: true, noreferrer: true}),
+		'<form action="" target="_blank" rel=" foo "></form>', {noopener: true}),
 		'<form action="" target="_blank" rel=" foo "></form>');
 });
 
 
-test('Ignores non-"_blank" form links', t => {
+test('Noreferrer ignores relative form links', t => {
+	t.is(addAttributes(
+		'<form action="/foo" target="_blank"></form>', {noreferrer: true}),
+		'<form action="/foo" target="_blank"></form>');
+
+	t.is(addAttributes(
+		'<form action="./foo" target="_blank"></form>', {noreferrer: true}),
+		'<form action="./foo" target="_blank"></form>');
+
+	t.is(addAttributes(
+		'<form action="foo" target="_blank"></form>', {noreferrer: true}),
+		'<form action="foo" target="_blank"></form>');
+
+	t.is(addAttributes(
+		'<form action="" target="_blank" rel=" foo "></form>', {noreferrer: true}),
+		'<form action="" target="_blank" rel=" foo "></form>');
+});
+
+
+test('Noopener ignores non-"_blank" form links', t => {
 	t.is(addAttributes(
 		'<form action="http://google.com/" target="_parent"></form>', {noopener: true}),
 		'<form action="http://google.com/" target="_parent"></form>');
 
 	t.is(addAttributes(
-		'<form action="http://google.com/" target="_self"></form>', {noreferrer: true}),
+		'<form action="http://google.com/" target="_self"></form>', {noopener: true}),
 		'<form action="http://google.com/" target="_self"></form>');
 
 	t.is(addAttributes(
-		'<form action="http://google.com/" target="_top"></form>', {noopener: true, noreferrer: true}),
+		'<form action="http://google.com/" target="_top"></form>', {noopener: true}),
 		'<form action="http://google.com/" target="_top"></form>');
 
 	t.is(addAttributes(
@@ -267,6 +378,33 @@ test('Ignores non-"_blank" form links', t => {
 	t.is(addAttributes(
 		'<form action="http://google.com/" target="named"></form>', {noopener: true}),
 		'<form action="http://google.com/" target="named" rel="noopener"></form>');
+
+	t.is(addAttributes(
+		'<form action="http://google.com/" target=" "></form>', {noopener: true}),
+		'<form action="http://google.com/" target=" " rel="noopener"></form>');
+});
+
+
+test('Noreferrer includes non-"_blank" form links', t => {
+	t.is(addAttributes(
+		'<form action="http://google.com/" target="_parent"></form>', {noreferrer: true}),
+		'<form action="http://google.com/" target="_parent" rel="noreferrer"></form>');
+
+	t.is(addAttributes(
+		'<form action="http://google.com/" target="_self"></form>', {noreferrer: true}),
+		'<form action="http://google.com/" target="_self" rel="noreferrer"></form>');
+
+	t.is(addAttributes(
+		'<form action="http://google.com/" target="_top"></form>', {noreferrer: true}),
+		'<form action="http://google.com/" target="_top" rel="noreferrer"></form>');
+
+	t.is(addAttributes(
+		'<form action="http://google.com/" target=""></form>', {noreferrer: true}),
+		'<form action="http://google.com/" target="" rel="noreferrer"></form>');
+
+	t.is(addAttributes(
+		'<form action="http://google.com/" target="named"></form>', {noreferrer: true}),
+		'<form action="http://google.com/" target="named" rel="noreferrer"></form>');
 
 	t.is(addAttributes(
 		'<form action="http://google.com/" target=" "></form>', {noreferrer: true}),
@@ -443,12 +581,16 @@ test('Noreferrer overrides noopener', t => {
 		'<a href="http://google.com/" target="_blank" rel="noreferrer"></a>');
 
 		t.is(addAttributes(
+		'<a href="http://google.com/" target="_blank" rel="noopener"></a>', {noopener: true, noreferrer: true}),
+		'<a href="http://google.com/" target="_blank" rel="noopener noreferrer"></a>');
+
+		t.is(addAttributes(
 		'<a href="http://google.com/" target="_blank" rel="noreferrer"></a>', {noopener: true, noreferrer: true}),
 		'<a href="http://google.com/" target="_blank" rel="noreferrer"></a>');
 });
 
 
-test('Opener prevents noopener', t => {
+test('Opener prevents noopener and noreferrer', t => {
 	t.is(addAttributes(
 		'<a href="http://google.com/" target="_blank" rel="opener"></a>', {noopener: true}),
 		'<a href="http://google.com/" target="_blank" rel="opener"></a>');
@@ -491,6 +633,23 @@ test('URLs can be ignored', t => {
 	t.is(addAttributes(
 		'<a href="http://gOoGlE.com/" target="_blank"></a>', {noopener: true, ignore: /google/i}),
 		'<a href="http://gOoGlE.com/" target="_blank"></a>');
+
+
+	t.is(addAttributes(
+		'<a href="http://bing.com/" target="_blank"></a>', {noreferrer: true, ignore: /bing/}),
+		'<a href="http://bing.com/" target="_blank"></a>');
+
+	t.is(addAttributes(
+		'<map><area shape="rect" coords="0,0,0,0" href="http://bing.com/" target="_blank"></map>', {noreferrer: true, ignore: /bing/}),
+		'<map><area shape="rect" coords="0,0,0,0" href="http://bing.com/" target="_blank"></map>');
+
+	t.is(addAttributes(
+		'<form action="http://bing.com/" target="_blank"></form>', {noreferrer: true, ignore: /bing/}),
+		'<form action="http://bing.com/" target="_blank"></form>');
+
+	t.is(addAttributes(
+		'<a href="http://BiNg.com/" target="_blank"></a>', {noreferrer: true, ignore: /bing/i}),
+		'<a href="http://BiNg.com/" target="_blank"></a>');
 });
 
 
