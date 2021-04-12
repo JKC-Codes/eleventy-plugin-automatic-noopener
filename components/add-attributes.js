@@ -29,126 +29,125 @@ module.exports = function(options) {
 			return node;
 		});
 
-		makeSafe(elements, options, AST);
+		makeLinksSafe(elements, options);
+		makeFormsSafe(elements, options, AST);
 
 		return AST;
-	}
+	};
 }
 
 
-function makeSafe(elements, options, tree) {
-	// Check all anchor and area elements
+function makeLinksSafe(elements, options) {
 	elements['a'].concat(elements['area']).forEach(node => {
 		if(node.attrs) {
 			const link = node.attrs[getAttributeKey('href', node.attrs)];
+			const rel = node.attrs[getAttributeKey('rel', node.attrs)];
 			const target = node.attrs[getAttributeKey('target', node.attrs)];
-			const hasUnsafeLink = getUnsafeLinkStatus(link, options.ignore);
-			const hasUnsafeTarget = getUnsafeTargetStatus(target);
-			const needsOpener = getOpenerNeed(node.attrs, options.noreferrer);
+			const needsAttribute = getAttributeNeed(link, rel, target, options);
 
-			if(needsOpener && hasUnsafeLink && hasUnsafeTarget) {
+			if(needsAttribute) {
 				addAttribute(node.attrs, options);
 			}
 		}
 	})
+}
 
-	// Check all forms
+function makeFormsSafe(elements, options, tree) {
 	elements['form'].forEach(form => {
-		let hasUnsafeLink;
-		let hasUnsafeTarget;
+		const status = {
+			form,
+			options,
+			done: false,
+			hasNoopener: false,
+			hasUnsafeLink: false, // external link that isn't ignored
+			hasUnsafeTarget: false // non-_blank target attribute
+		}
 
 		// Action attribute contains the URL on forms
 		if(form.attrs) {
+			const rel = form.attrs[getAttributeKey('rel', form.attrs)];
+
+			if(hasWord('(?:noreferrer|opener)', rel)) {
+				// No need to add a rel attribute
+				return;
+			}
+			else if(hasWord('noopener', rel)) {
+				status.hasNoopener = true;
+			}
+
 			const link = form.attrs[getAttributeKey('action', form.attrs)];
 			const target = form.attrs[getAttributeKey('target', form.attrs)];
-			hasUnsafeLink = getUnsafeLinkStatus(link, options.ignore);
-			hasUnsafeTarget = getUnsafeTargetStatus(target);
-			const needsOpener = getOpenerNeed(form.attrs, options.noreferrer);
 
-			if(needsOpener && hasUnsafeLink && hasUnsafeTarget) {
-				addAttribute(form.attrs, options);
-				return;
-			}
-			else if(!needsOpener) {
-				return;
-			}
+			updateUnsafeStatus(link, target, status);
 		}
 
 		// Check for nested buttons or inputs in the form with an overriding formaction/formtarget attribute
 		tree.walk.call(form, formChild => {
-			if((hasUnsafeLink && hasUnsafeTarget) || !formChild.tag || !formChild.attrs) {
+			if(status.done || !formChild.tag || !formChild.attrs) {
 				return formChild;
 			}
 
 			const tag = formChild.tag.toLowerCase();
 			const type = formChild.attrs[getAttributeKey('type', formChild.attrs)];
-			const hasButtonType = type && type.trim().toLowerCase() === 'button';
-			const hasResetType = type && type.trim().toLowerCase() === 'reset';
-			const hasImageType = type && type.trim().toLowerCase() === 'image';
-			const hasSubmitType = type && type.trim().toLowerCase() === 'submit';
-			const isRelevantButton = tag === 'button' && !hasButtonType && !hasResetType;
-			const isRelevantInput = tag === 'input' && (hasImageType || hasSubmitType)
+			const hasTypeButton = type && type.trim().toLowerCase() === 'button';
+			const hasTypeReset = type && type.trim().toLowerCase() === 'reset';
+			const hasTypeImage = type && type.trim().toLowerCase() === 'image';
+			const hasTypeSubmit = type && type.trim().toLowerCase() === 'submit';
+			const isRelevantButton = tag === 'button' && !hasTypeButton && !hasTypeReset;
+			const isRelevantInput = tag === 'input' && (hasTypeImage || hasTypeSubmit);
 
 			if(isRelevantButton || isRelevantInput) {
-				if(!hasUnsafeLink) {
+				if(!status.hasUnsafeLink) {
 					const link = formChild.attrs[getAttributeKey('formaction', formChild.attrs)];
-					hasUnsafeLink = getUnsafeLinkStatus(link, options.ignore);
+					updateUnsafeStatus(link, null, status);
 				}
 
-				if(!hasUnsafeTarget) {
+				if(!status.hasUnsafeTarget) {
 					const target = formChild.attrs[getAttributeKey('formtarget', formChild.attrs)];
-					hasUnsafeTarget = getUnsafeTargetStatus(target);
+					updateUnsafeStatus(null, target, status);
 				}
 			}
 
 			return formChild;
-		});
-
-		if(hasUnsafeLink && hasUnsafeTarget) {
-			addAttribute(form.attrs, options);
-			return;
-		}
+		})
 
 		// If form has an ID, check for buttons anywhere in the document with an overriding formaction/formtarget attribute
 		const formID = form.attrs && form.attrs[getAttributeKey('id', form.attrs)];
 
-		if(formID) {
-			for(let button of elements['button']) {
-				if(button.attrs) {
-					const formAttribute = button.attrs[getAttributeKey('form', button.attrs)];
-					const type = button.attrs[getAttributeKey('type', button.attrs)];
-					const hasButtonType = type && type.trim().toLowerCase() === 'button';
-					const hasResetType = type && type.trim().toLowerCase() === 'reset';
+		if(status.done || !formID) {
+			return;
+		}
 
-					if(formAttribute && formAttribute.trim().toLowerCase() === formID && !hasButtonType && !hasResetType) {
-						if(!hasUnsafeLink) {
-							const link = button.attrs[getAttributeKey('formaction', button.attrs)];
-							hasUnsafeLink = getUnsafeLinkStatus(link, options.ignore);
-						}
+		for(let button of elements['button']) {
+			if(!button.attrs) {
+				continue;
+			}
 
-						if(!hasUnsafeTarget) {
-							const target = button.attrs[getAttributeKey('formtarget', button.attrs)];
-							hasUnsafeTarget = getUnsafeTargetStatus(target);
-						}
+			const formAttribute = button.attrs[getAttributeKey('form', button.attrs)];
+			const hasReleventFormAttribute = formAttribute && formAttribute.trim() === formID;
+			const type = button.attrs[getAttributeKey('type', button.attrs)];
+			const hasButtonType = type && type.trim().toLowerCase() === 'button';
+			const hasResetType = type && type.trim().toLowerCase() === 'reset';
 
-						if(hasUnsafeLink && hasUnsafeTarget) {
-							addAttribute(form.attrs, options);
-							return;
-						}
-					}
+			if(hasReleventFormAttribute && !hasButtonType && !hasResetType) {
+				if(!status.hasUnsafeLink) {
+					const link = button.attrs[getAttributeKey('formaction', button.attrs)];
+					updateUnsafeStatus(link, null, status);
 				}
+
+				if(!status.hasUnsafeTarget) {
+					const target = button.attrs[getAttributeKey('formtarget', button.attrs)];
+					updateUnsafeStatus(null, target, status);
+				}
+			}
+
+			if(status.done) {
+				break;
 			}
 		}
 	})
 }
 
-function getOpenerNeed(attributes, noreferrer) {
-	const rel = attributes[getAttributeKey('rel', attributes)];
-	const hasNoreferrerOrOpener = hasWord('(?:noreferrer|opener)', rel);
-	const hasNoopener = hasWord('noopener', rel);
-
-	return hasNoreferrerOrOpener || (!noreferrer && hasNoopener) ? false : true;
-}
 
 function getAttributeKey(attribute, attributes) {
 	if(!attributes) {
@@ -163,27 +162,47 @@ function getAttributeKey(attribute, attributes) {
 	}
 }
 
-function hasWord(word, string) {
-	// Regex = start of string or whitespace + word + end of string or whitespace
-	return new RegExp(`(?:^|\s)${word}(?:$|\s)`, 'i').test(string);
+function getAttributeNeed(link, rel, target, options) {
+	const hasExternalLink = getExternalLinkStatus(link);
+	const isIgnored = options.ignore && options.ignore.test(link);
+	const hasNoreferrerOrOpener = hasWord('(?:noreferrer|opener)', rel);
+
+	if(hasExternalLink && !isIgnored && !hasNoreferrerOrOpener) {
+		if(options.noreferrer) {
+			return true;
+		}
+
+		const hasNoopener = hasWord('noopener', rel);
+		const hasUnsafeTarget = getUnsafeTargetStatus(target);
+
+		if(options.noopener && !hasNoopener && hasUnsafeTarget) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
-function getUnsafeLinkStatus(link, ignoreRegex) {
-	if(link && link !== true) {
-		link = link.trim().toLowerCase();
+function getExternalLinkStatus(link) {
+	if(link) {
+		link = link.trim();
 		// Ensure that an existing link on the page isn't matched
 		const randomDomain = 'automaticnoopenerplugin' + Math.floor(Math.random() * 89999 + 10000);
 		const isInternalLink = new URL(link, `https://${randomDomain}.com/`).host === `${randomDomain}.com`;
-		const isManuallyIgnored = ignoreRegex && ignoreRegex.test(link);
 
-		link = !isInternalLink && !isManuallyIgnored;
+		link = !isInternalLink;
 	}
 
 	return link;
 }
 
+function hasWord(word, string) {
+	// Regex = start of string or whitespace + word + end of string or whitespace
+	return new RegExp(`(?:^|\s)${word}(?:$|\s)`, 'i').test(string);
+}
+
 function getUnsafeTargetStatus(target) {
-	if(target && target !== true) {
+	if(target) {
 		const safeTargets = ['_parent', '_self', '_top'];
 
 		target = !safeTargets.includes(target.trim().toLowerCase());
@@ -213,5 +232,33 @@ function addAttribute(attributes, options) {
 		}
 
 		attributes[relKey] += newValue;
+	}
+}
+
+function updateUnsafeStatus(link, target, status) {
+	if(link && !status.hasUnsafeLink) {
+		const hasExternalLink = getExternalLinkStatus(link);
+		const isIgnored = status.options.ignore && status.options.ignore.test(link);
+
+		if(hasExternalLink && !isIgnored) {
+			status.hasUnsafeLink = getExternalLinkStatus(link);
+		}
+	}
+
+	if(target && !status.hasUnsafeTarget) {
+		status.hasUnsafeTarget = getUnsafeTargetStatus(target);
+	}
+
+	if(status.hasUnsafeLink) {
+		const needsOpener = status.options.noopener && !status.hasNoopener && status.hasUnsafeTarget;
+
+		if(status.options.noreferrer || needsOpener) {
+			if(!status.form.attrs) {
+				status.form.attrs = {};
+			}
+
+			addAttribute(status.form.attrs, status.options);
+			status.done = true;
+		}
 	}
 }
