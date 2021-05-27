@@ -32,6 +32,10 @@ test('Adds noopener to anchor links', t => {
 		'<a href="https://google.com/" target="_blank" rel="noopener"></a>');
 
 	t.is(addAttributes(
+		'<a href="//google.com/" target="_blank"></a>', {noopener: true}),
+		'<a href="//google.com/" target="_blank" rel="noopener"></a>');
+
+	t.is(addAttributes(
 		'<a href="https://google.com/" target="_blank" rel="nofollow"></a>', {noopener: true}),
 		'<a href="https://google.com/" target="_blank" rel="nofollow noopener"></a>');
 
@@ -53,6 +57,10 @@ test('Adds noreferrer to anchor links', t => {
 	t.is(addAttributes(
 		'<a href="https://google.com/" target="_blank"></a>', {noreferrer: true}),
 		'<a href="https://google.com/" target="_blank" rel="noreferrer"></a>');
+
+	t.is(addAttributes(
+		'<a href="//google.com/" target="_blank"></a>', {noreferrer: true}),
+		'<a href="//google.com/" target="_blank" rel="noreferrer"></a>');
 
 	t.is(addAttributes(
 		'<a href="https://google.com/" target="_blank" rel="nofollow"></a>', {noreferrer: true}),
@@ -174,6 +182,10 @@ test('Adds noopener to area links', t => {
 		'<map><area shape="rect" coords="0,0,0,0" href="https://google.com/" target="_blank" rel="noopener"></map>');
 
 	t.is(addAttributes(
+		'<map><area shape="rect" coords="0,0,0,0" href="//google.com/" target="_blank"></map>', {noopener: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="//google.com/" target="_blank" rel="noopener"></map>');
+
+	t.is(addAttributes(
 		'<map><area shape="rect" coords="0,0,0,0" href="https://google.com/" target="_blank" rel="nofollow"></map>', {noopener: true}),
 		'<map><area shape="rect" coords="0,0,0,0" href="https://google.com/" target="_blank" rel="nofollow noopener"></map>');
 });
@@ -187,6 +199,10 @@ test('Adds noreferrer to area links', t => {
 	t.is(addAttributes(
 		'<map><area shape="rect" coords="0,0,0,0" href="https://google.com/" target="_blank"></map>', {noreferrer: true}),
 		'<map><area shape="rect" coords="0,0,0,0" href="https://google.com/" target="_blank" rel="noreferrer"></map>');
+
+	t.is(addAttributes(
+		'<map><area shape="rect" coords="0,0,0,0" href="//google.com/" target="_blank"></map>', {noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="//google.com/" target="_blank" rel="noreferrer"></map>');
 
 	t.is(addAttributes(
 		'<map><area shape="rect" coords="0,0,0,0" href="https://google.com/" target="_blank" rel="nofollow"></map>', {noreferrer: true}),
@@ -300,6 +316,10 @@ test('Adds noopener to form links', t => {
 		'<form action="https://google.com/" target="_blank" rel="noopener"></form>');
 
 	t.is(addAttributes(
+		'<form action="//google.com/" target="_blank"></form>', {noopener: true}),
+		'<form action="//google.com/" target="_blank" rel="noopener"></form>');
+
+	t.is(addAttributes(
 		'<form action="https://google.com/" target="_blank" rel="nofollow"></form>', {noopener: true}),
 		'<form action="https://google.com/" target="_blank" rel="nofollow noopener"></form>');
 });
@@ -313,6 +333,10 @@ test('Adds noreferrer to form links', t => {
 	t.is(addAttributes(
 		'<form action="https://google.com/" target="_blank"></form>', {noreferrer: true}),
 		'<form action="https://google.com/" target="_blank" rel="noreferrer"></form>');
+
+	t.is(addAttributes(
+		'<form action="//google.com/" target="_blank"></form>', {noreferrer: true}),
+		'<form action="//google.com/" target="_blank" rel="noreferrer"></form>');
 
 	t.is(addAttributes(
 		'<form action="https://google.com/" target="_blank" rel="nofollow"></form>', {noreferrer: true}),
