@@ -33,7 +33,9 @@ module.exports = function(eleventyConfig) {
 
 
 ### PostHTML
-If you're already using [PostHTML](https://posthtml.org/) you can reduce build times by using the `posthtml` export as a plugin to the existing PostHTML syntax tree. It provides a stand-alone PostHTML version of Automatic Noopener that could even be used outside of Eleventy. There is also an optional `parser` export that provides an options parser to further reduce build times when using Eleventy's `--watch` or `--serve` options. Parsing your options outside of the transform will mean this is only done once at the start of watching or serving rather than every time Eleventy builds.
+If you're already using [PostHTML](https://posthtml.org/) you can reduce build times by using the `posthtml` export as a plugin to your existing PostHTML syntax tree. It provides a stand-alone PostHTML version of Automatic Noopener that can even be used outside of Eleventy.
+
+The optional `parser` export further reduces build times when using PostHTML with Eleventy's `--watch` or `--serve` arguments. Parsing your options outside of the transform will mean it's only done once at the start of watching or serving rather than every time Eleventy builds.
 
 ```js
 const posthtml = require('posthtml');
