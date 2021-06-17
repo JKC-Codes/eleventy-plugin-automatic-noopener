@@ -1,7 +1,7 @@
 {
 	"name": "eleventy-plugin-automatic-noopener",
 	"version": "1.0.1",
-	"description": "11ty plugin for automatically adding a rel='noopener' or rel='noreferrer' attribute to all external links.",
+	"description": "11ty plugin for automatically adding a rel='noopener' or rel='noreferrer' attribute to all unsafe external links.",
 	"keywords": [
 		"11ty",
 		"eleventy",

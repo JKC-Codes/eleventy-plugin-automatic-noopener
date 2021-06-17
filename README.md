@@ -1,5 +1,5 @@
 # Automatic Noopener
-An [11ty](https://www.11ty.dev/) plugin that automatically adds a `rel="noopener"` or `rel="noreferrer"` attribute to all external links.
+An [11ty](https://www.11ty.dev/) plugin that automatically adds a `rel="noopener"` or `rel="noreferrer"` attribute to all unsafe external links.
 
 
 - [Installation](#installation)
