@@ -183,7 +183,7 @@ function getAttributeKey(attribute, attributes) {
 
 function hasWord(word, string) {
 	// Regex = start of string or whitespace + word + end of string or whitespace
-	return new RegExp(`(?:^|\s)${word}(?:$|\s)`, 'i').test(string);
+	return new RegExp(String.raw`(?:^|\s)${word}(?:$|\s)`, 'i').test(string);
 }
 
 function getUnsafeTargetStatus(target) {
@@ -202,7 +202,7 @@ function updateUnsafeStatus(link, target, state, node, options) {
 		const isIgnored = options.ignore && options.ignore.test(link);
 
 		if(hasExternalLink && !isIgnored) {
-			state.hasUnsafeLink = getExternalLinkStatus(link);
+			state.hasUnsafeLink = true;
 		}
 	}
 
