@@ -641,6 +641,25 @@ test('Opener prevents noopener and noreferrer', t => {
 });
 
 
+test('Attributes are not duplicated', t => {
+	t.is(addAttributes(
+		'<a href="http://google.com/" target="_blank" rel="noopener noreferrer"></a>', {noopener: true, noreferrer: true}),
+		'<a href="http://google.com/" target="_blank" rel="noopener noreferrer"></a>');
+
+	t.is(addAttributes(
+		'<a href="http://google.com/" target="_blank" rel="noopener noreferrer"></a>', {noopener: true, noreferrer: false}),
+		'<a href="http://google.com/" target="_blank" rel="noopener noreferrer"></a>');
+
+	t.is(addAttributes(
+		'<a href="http://google.com/" target="_blank" rel="noopener noreferrer"></a>', {noopener: false, noreferrer: true}),
+		'<a href="http://google.com/" target="_blank" rel="noopener noreferrer"></a>');
+
+	t.is(addAttributes(
+		'<a href="http://google.com/" target="_blank" rel="noopener noreferrer"></a>', {noopener: false, noreferrer: false}),
+		'<a href="http://google.com/" target="_blank" rel="noopener noreferrer"></a>');
+});
+
+
 test('URLs can be ignored', t => {
 	t.is(addAttributes(
 		'<a href="http://google.com/" target="_blank"></a>', {noopener: true, ignore: /google/}),
