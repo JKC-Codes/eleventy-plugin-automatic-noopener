@@ -167,7 +167,6 @@ function makeFormsSafe(elements, options, tree) {
 	})
 }
 
-
 function getAttributeKey(attribute, attributes) {
 	if(!attributes) {
 		return undefined;
