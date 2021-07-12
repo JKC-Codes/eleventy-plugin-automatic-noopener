@@ -641,22 +641,44 @@ test('Opener prevents noopener and noreferrer', t => {
 });
 
 
-test('Attributes are not duplicated', t => {
+test('Classes are not duplicated', t => {
+	t.is(addAttributes(
+		'<a href="http://google.com/" target="_blank" rel="noopener"></a>', {noopener: true, noreferrer: false}),
+		'<a href="http://google.com/" target="_blank" rel="noopener"></a>');
+
+	t.is(addAttributes(
+		'<a href="http://google.com/" target="_blank" rel="noreferrer"></a>', {noopener: false, noreferrer: true}),
+		'<a href="http://google.com/" target="_blank" rel="noreferrer"></a>');
+
 	t.is(addAttributes(
 		'<a href="http://google.com/" target="_blank" rel="noopener noreferrer"></a>', {noopener: true, noreferrer: true}),
 		'<a href="http://google.com/" target="_blank" rel="noopener noreferrer"></a>');
 
-	t.is(addAttributes(
-		'<a href="http://google.com/" target="_blank" rel="noopener noreferrer"></a>', {noopener: true, noreferrer: false}),
-		'<a href="http://google.com/" target="_blank" rel="noopener noreferrer"></a>');
 
 	t.is(addAttributes(
-		'<a href="http://google.com/" target="_blank" rel="noopener noreferrer"></a>', {noopener: false, noreferrer: true}),
-		'<a href="http://google.com/" target="_blank" rel="noopener noreferrer"></a>');
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_blank" rel="noopener"></map>', {noopener: true, noreferrer: false}),
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_blank" rel="noopener"></map>');
 
 	t.is(addAttributes(
-		'<a href="http://google.com/" target="_blank" rel="noopener noreferrer"></a>', {noopener: false, noreferrer: false}),
-		'<a href="http://google.com/" target="_blank" rel="noopener noreferrer"></a>');
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_blank" rel="noreferrer"></map>', {noopener: false, noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_blank" rel="noreferrer"></map>');
+
+	t.is(addAttributes(
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_blank" rel="noopener noreferrer"></map>', {noopener: true, noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_blank" rel="noopener noreferrer"></map>');
+
+
+	t.is(addAttributes(
+		'<form action="http://google.com/" target="_blank" rel="noopener"></form>', {noopener: true, noreferrer: false}),
+		'<form action="http://google.com/" target="_blank" rel="noopener"></form>');
+
+	t.is(addAttributes(
+		'<form action="http://google.com/" target="_blank" rel="noreferrer"></form>', {noopener: false, noreferrer: true}),
+		'<form action="http://google.com/" target="_blank" rel="noreferrer"></form>');
+
+	t.is(addAttributes(
+		'<form action="http://google.com/" target="_blank" rel="noopener noreferrer"></form>', {noopener: true, noreferrer: true}),
+		'<form action="http://google.com/" target="_blank" rel="noopener noreferrer"></form>');
 });
 
 
