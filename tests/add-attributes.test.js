@@ -682,6 +682,36 @@ test('Classes are not duplicated', t => {
 });
 
 
+test('Noopener can be toggled', t => {
+	t.is(addAttributes(
+		'<a href="http://google.com/" target="_blank"></a>', {noopener: false}),
+		'<a href="http://google.com/" target="_blank"></a>');
+
+	t.is(addAttributes(
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_blank"></map>', {noopener: false}),
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_blank"></map>');
+
+	t.is(addAttributes(
+		'<form action="http://google.com/" target="_blank"></form>', {noopener: false}),
+		'<form action="http://google.com/" target="_blank"></form>');
+});
+
+
+test('Noreferrer can be toggled', t => {
+	t.is(addAttributes(
+		'<a href="http://google.com/" target="_blank"></a>', {noreferrer: false}),
+		'<a href="http://google.com/" target="_blank"></a>');
+
+	t.is(addAttributes(
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_blank"></map>', {noreferrer: false}),
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_blank"></map>');
+
+	t.is(addAttributes(
+		'<form action="http://google.com/" target="_blank"></form>', {noreferrer: false}),
+		'<form action="http://google.com/" target="_blank"></form>');
+});
+
+
 test('URLs can be ignored', t => {
 	t.is(addAttributes(
 		'<a href="http://google.com/" target="_blank"></a>', {noopener: true, ignore: /google/}),
@@ -718,7 +748,7 @@ test('URLs can be ignored', t => {
 });
 
 
-test('elements can be toggled', t => {
+test('Elements can be toggled', t => {
 	t.is(addAttributes(
 		'<a href="http://google.com/" target="_blank"></a>', {noopener: true, elements: []}),
 		'<a href="http://google.com/" target="_blank"></a>');
