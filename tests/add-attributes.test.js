@@ -682,6 +682,35 @@ test('Classes are not duplicated', t => {
 });
 
 
+test('Existing attributes are kept', t => {
+	t.is(addAttributes(
+		'<a href="http://google.com/" target="_blank" rel="me" class="keep" data-keep="true"></a>', {noopener: true, noreferrer: false}),
+		'<a href="http://google.com/" target="_blank" rel="me noopener" class="keep" data-keep="true"></a>');
+
+	t.is(addAttributes(
+		'<a href="http://google.com/" target="_blank" rel="me" class="keep" data-keep="true"></a>', {noopener: false, noreferrer: true}),
+		'<a href="http://google.com/" target="_blank" rel="me noreferrer" class="keep" data-keep="true"></a>');
+
+
+	t.is(addAttributes(
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_blank" rel="me" class="keep" data-keep="true"></map>', {noopener: true, noreferrer: false}),
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_blank" rel="me noopener" class="keep" data-keep="true"></map>');
+
+	t.is(addAttributes(
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_blank" rel="me" class="keep" data-keep="true"></map>', {noopener: false, noreferrer: true}),
+		'<map><area shape="rect" coords="0,0,0,0" href="http://google.com/" target="_blank" rel="me noreferrer" class="keep" data-keep="true"></map>');
+
+
+	t.is(addAttributes(
+		'<form action="http://google.com/" target="_blank" rel="me" class="keep" data-keep="true"></form>', {noopener: true, noreferrer: false}),
+		'<form action="http://google.com/" target="_blank" rel="me noopener" class="keep" data-keep="true"></form>');
+
+	t.is(addAttributes(
+		'<form action="http://google.com/" target="_blank" rel="me" class="keep" data-keep="true"></form>', {noopener: false, noreferrer: true}),
+		'<form action="http://google.com/" target="_blank" rel="me noreferrer" class="keep" data-keep="true"></form>');
+});
+
+
 test('Noopener can be toggled', t => {
 	t.is(addAttributes(
 		'<a href="http://google.com/" target="_blank"></a>', {noopener: false}),
